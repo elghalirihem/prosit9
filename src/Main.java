@@ -1,45 +1,98 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
+package tn.esprit.gestionzoo.main;
+
+public class ZooManagement {
+
     public static void main(String[] args) {
+        Animal lion = new Animal();
+        lion.setName("Simba");
+        try {
+            lion.setAge(8);
+        } catch (InvalidAgeException e) {
+            System.out.println(e.getMessage());
+        }
+        lion.setFamily("Cats");
+        lion.setMammal(true);
 
-        Zoo myZoo = new Zoo("Mon Zoo", "Ma Ville");
+        Zoo myZoo = new Zoo("Wildlife Park", "Ariana");
+        Zoo notMyZoo = new Zoo("WaterPark", "Siliana");
 
 
-        Animal lion = new Animal("Félin", "Lion", 5, true);
-        Animal elephant = new Animal("Éléphant", "Babar", 10, true);
-        Animal giraffe = new Animal("Girafe", "Sophie", 7, true);
+        Animal dog = new Animal("Canine", "Snoopy", 2, true);
 
-        myZoo.addAnimal(lion);
-        myZoo.addAnimal(elephant);
-        myZoo.addAnimal(giraffe);
 
-        myZoo.displayZoo();
+        try {
+            myZoo.addAnimal(lion);
+        } catch (ZooFullException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            System.out.println(myZoo.getName() + " contient " + myZoo.getNbrAnimals() + " animaux");
+        }
+        try {
+            myZoo.addAnimal(dog);
+        } catch (ZooFullException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            System.out.println(myZoo.getName() + " contient " + myZoo.getNbrAnimals() + " animaux");
+        }
 
         myZoo.displayAnimals();
 
-        int index = myZoo.searchAnimal("Babar");
-        if (index != -1) {
-            System.out.println("L'animal Babar a été trouvé à l'indice " + index);
-        } else {
-            System.out.println("L'animal Babar n'a pas été trouvé dans le zoo.");
+        System.out.println(myZoo.searchAnimal(dog));
+        Animal dog2 = new Animal("Canine", "lll", 2, true);
+        System.out.println(myZoo.searchAnimal(dog2));
+
+//           System.out.println(myZoo.removeAnimal(dog));
+        myZoo.displayAnimals();
+
+
+        System.out.println(myZoo);
+
+        try {
+            myZoo.addAnimal(lion);
+        } catch (ZooFullException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            System.out.println(myZoo.getName() + " contient " + myZoo.getNbrAnimals() + " animaux");
         }
 
-        boolean removed = myZoo.removeAnimal(elephant);
-        if (removed) {
-            System.out.println("L'animal Babar a été supprimé du zoo.");
-        } else {
-            System.out.println("L'animal Babar n'a pas été trouvé dans le zoo.");
+        myZoo.displayAnimals();
+
+        Dolphin d = new Dolphin();
+        d.setSwimmingSpeed(24.5f);
+        Dolphin d1 = new Dolphin();
+        d1.setSwimmingSpeed(21.8f);
+        Dolphin d2 = new Dolphin();
+        d2.setSwimmingSpeed(20.3f);
+        Dolphin d3 = new Dolphin();
+        d3.setSwimmingSpeed(22.6f);
+
+
+        myZoo.addAquaticAnimal(d);
+        myZoo.addAquaticAnimal(d1);
+        myZoo.addAquaticAnimal(d2);
+        myZoo.addAquaticAnimal(d3);
+        Penguin p = new Penguin();
+        p.setSwimmingDepth(24.6f);
+        Penguin p1 = new Penguin();
+        p1.setSwimmingDepth(29.6f);
+        Penguin p2 = new Penguin();
+        p2.setSwimmingDepth(219.6f);
+        Penguin p3 = new Penguin();
+        p1.setSwimmingDepth(2.6f);
+        myZoo.addAquaticAnimal(p);
+        myZoo.addAquaticAnimal(p1);
+        myZoo.addAquaticAnimal(p2);
+        myZoo.addAquaticAnimal(p3);
+        myZoo.addAquaticAnimal(new Penguin());
+
+
+        for (int i = 0; i < myZoo.getNbrAquatics(); i++) {
+            Aquatic[] aquatics = myZoo.getAquaticAnimals();
+            aquatics[i].swim();
         }
 
-        Zoo zooA = new Zoo("Zoo A", "Ville A");
-        Zoo zooB = new Zoo("Zoo B", "Ville B");
-        zooA.addAnimal(new Animal("Félin", "Tigre", 4, true));
-        zooB.addAnimal(new Animal("Oiseau", "Aigle", 3, false));
+//        myZoo.displayNumberOfAquaticsByType();
 
-        Zoo zooAvecLePlusDAanimaux = Zoo.comparerZoo(zooA, zooB);
-        System.out.println("Le zoo avec le plus d'animaux est : " + zooAvecLePlusDAanimaux.name);
-
-        System.out.println("Le zoo est-il plein ? " + Zoo.isZooFull(myZoo));
-    }
-}
+//        System.out.println(myZoo.maxPenguinSwimmingDepth());
